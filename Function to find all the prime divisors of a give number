@@ -1,0 +1,23 @@
+    public static HashMap<Integer,Integer> divisors(int num){
+        HashMap<Integer,Integer> map = new HashMap<>();
+        //The keys of the map will denote the divisors and the values of the keys will denote
+        // the number of times that divisors has to be multiplied.
+        map.put(1,1);
+        int temp = num;
+        for(int i=2;i<=Math.ceil(Math.sqrt(num));i++){
+            while((temp%i)==0){
+                if((temp%i)==0){
+                    if(map.containsKey(i)){
+                        map.replace(i,map.get(i),map.get(i)+1);
+                    }
+                    else{
+                        map.put(i,1);
+                    }
+                    temp = temp/i;
+                }
+            }
+        }
+        //In the prime divisors we are excluding the numebr itself for now.
+        //map.put(num,1);
+        return map;
+    }
