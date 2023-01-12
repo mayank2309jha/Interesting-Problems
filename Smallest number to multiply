@@ -1,0 +1,35 @@
+    public static int smallestNumberToMultiply(HashMap<Integer,Integer> nMap,HashMap<Integer,Integer> kMap){
+        //This function returns the smallest number that is to be multiplied to a given number k whose divisors are represented
+        // in the hashmap kMap such that it becomes a multiple of n whose prime divisors are represented in teh hashamp nMap.
+
+        //We will remove all the keys from the nMap which are present in kMap as well.
+        //We subtract the values of these keys in nMap by the vaues of the keys in kMap.
+        HashSet<Integer> toRemove = new HashSet<>();
+        HashSet<Integer> toReduce = new HashSet<>();
+        for(Map.Entry<Integer,Integer> entry: nMap.entrySet()){
+            int key = entry.getKey();
+            if(kMap.containsKey(key)){
+                //Now we compare there values.
+                if(nMap.get(key) > kMap.get(key)){
+                    toReduce.add(key);
+                }
+                else if(nMap.get(key) <= kMap.get(key)){
+                    toReduce.add(key);
+                }
+            }
+        }
+        for(int item: toRemove){
+            nMap.remove(item);
+        }
+        for(int item: toReduce){
+            nMap.replace(item,nMap.get(item),nMap.get(item)-kMap.get(item));
+        }
+
+        int product = 1;
+        for(Map.Entry<Integer,Integer> entry: nMap.entrySet()){
+            int key = entry.getKey();
+            int toMultiply = power(key, nMap.get(key));
+            product = product*toMultiply;
+        }
+        return product;
+    }
